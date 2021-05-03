@@ -1,13 +1,18 @@
-import React, { useEffect } from 'react';
-import { Table, Subscribe } from '.';
+import React, { useEffect, useState } from 'react';
+import { Table, Subscribe, Position } from '.';
 
 const Provider = () => {
+	const [subscribers, setScriber] = useState<Subscribe>(new Subscribe());
+	const [position, setPosition] = useState<Position | undefined>(undefined);
 	useEffect(() => {
-		// 초기화 시
+		// 초기화
+		setPosition(new Position(subscribers));
+	}, [subscribers]);
 
-	});
 	return (
-		<Table />
+		<Table
+			subscribers = {subscribers}
+		/>
 	)
 };
 

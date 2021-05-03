@@ -1,4 +1,5 @@
-## 계획
+- [ ] ## 계획
+
 
 <목표>
 
@@ -15,3 +16,16 @@
 - [ ] 기존 table cell의 상태를 저장해두면서 되돌릴 수 있도록 하기
 - [ ] mouse가 움직이는 것에 이벤트 x => 들어오고 나가는 것에 이벤트를 두기
 - [ ] 이벤트는 버블링을 이용하여 가장 상위 DOM에 부착하기
+
+
+
+<이슈>
+
+- [ ] React.MouseEvent<HTMLTableElement, MouseEvent>는 target.value 받아오지 못함
+
+```js
+const target : Element = (event.target as Element);
+console.log(target.id);
+```
+
+https://stackoverflow.com/questions/28900077/why-is-event-target-not-element-in-typescript
