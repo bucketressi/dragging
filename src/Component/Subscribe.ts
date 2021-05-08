@@ -1,10 +1,15 @@
-import { EventType } from './Type';
+import { Dispatch } from 'react';
+import { EventType, tdType } from './Type';
 
 export default class Subscribe{
 	private subscribers : {[event : string] : Function[]};
+	public boolArray : tdType;
+	public setBoolArray : Dispatch<tdType>;
 
-	constructor(){
+	constructor(boolArray : tdType, setBoolArray : Dispatch<tdType>){
 		this.subscribers = {};
+		this.boolArray = boolArray;
+		this.setBoolArray = setBoolArray;
 	}
 	subscribe(event : string, callback : Function){
 		// event의 handler로 callback 등록
@@ -28,6 +33,7 @@ export default class Subscribe{
 	publish(event : string, data? : EventType){
 		if(!this.subscribers[event])
 			return;
-		this.subscribers[event].forEach((handler : Function) => handler(data));
+		// 핸들러 순차적 실행
+		this.subscribers[event].forEach(async (handler : Function) => await handler(data));
 	}
 }

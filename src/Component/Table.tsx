@@ -1,36 +1,55 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Subscribe } from '.';
-import { EventType } from './Type';
+import { EventType, tdType } from './Type';
 
 type Props = {
 	subscribers : Subscribe;
+	weekDay : string[];
+	bodyArray : number[];
+	boolArray : tdType;
 }
 
-const Table = ({subscribers} : Props) => {
-	const weekDay = ["월", "화", "수", "목", "금", "토", "일"];
-	const bodyArray = [0, 1, 2, 3, 4, 5, 6];
+const Table = ({subscribers, weekDay, bodyArray, boolArray} : Props) => {
 
 	const clickHandler = (event : EventType) => {
-		subscribers.publish('clickStart', event);
+		event.preventDefault();
+		subscribers.publish('mouseDown', event);
+	}
+
+	const moveHandler = (event : EventType) => {
+		event.preventDefault();
+		subscribers.publish('mouseMove', event);
+	}
+	
+	const doneHandler = (event : EventType) => {
+		event.preventDefault();
+		subscribers.publish('mouseUp', event);
 	}
 
 	return (
 		<div>
-			<table onMouseDown={clickHandler}>
-				<tr>
-					{weekDay.map(day => <th>{day}</th>)}
-				</tr>
+			<table onMouseDown={clickHandler} onMouseMove={moveHandler} onMouseUp={doneHandler}>
+				<thead>
+					<tr>
+						{weekDay.map(day => <th key={day}>{day}</th>)}
+					</tr>
+				</thead>
+				<tbody>
 				{
 					bodyArray.map((idx) => (
-						<tr>
+						<tr key={idx}>
 							{
-								bodyArray.map((idx2) => (
-									<td id={`${idx},${idx2}`}>({idx},{idx2})</td>
-								))
+								bodyArray.map((idx2) => {
+									const id = `${idx},${idx2}`;
+									return (
+										<td key={idx2} id={id} className={boolArray[id]?"clicked":""}>({idx},{idx2})</td>
+									);
+								})
 							}
 						</tr>
 					))
 				}
+				</tbody>
 			</table>
 		</div>
 	);
