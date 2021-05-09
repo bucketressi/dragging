@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Subscribe } from '.';
 import { EventType, tdType } from './Type';
 
@@ -26,6 +26,10 @@ const Table = ({subscribers, weekDay, bodyArray, boolArray} : Props) => {
 		subscribers.publish('mouseUp', event);
 	}
 
+	useEffect(()=> {
+		console.log("change boolarray");
+	},[boolArray]);
+
 	return (
 		<div>
 			<table onMouseDown={clickHandler} onMouseMove={moveHandler} onMouseUp={doneHandler}>
@@ -41,8 +45,9 @@ const Table = ({subscribers, weekDay, bodyArray, boolArray} : Props) => {
 							{
 								bodyArray.map((idx2) => {
 									const id = `${idx},${idx2}`;
+									const boolean = boolArray[id];
 									return (
-										<td key={idx2} id={id} className={boolArray[id]?"clicked":""}>({idx},{idx2})</td>
+										<td key={`${id}/${boolean}`} id={id} className={boolean?"clicked":""}>({idx},{idx2},{boolean.toString()})</td>
 									);
 								})
 							}

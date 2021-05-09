@@ -15,9 +15,11 @@ export default class IsClicked{
 	}
 
 	start(){
+		console.log("click start");
 		this.isClicked = true;
 	}
 	end(){
+		console.log("click end");
 		this.isClicked = false;
 	}
 }

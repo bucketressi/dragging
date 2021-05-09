@@ -6,7 +6,6 @@ const Provider = () => {
 	const weekDay = ["월", "화", "수", "목", "금", "토", "일"];
 	const [bodyArray, setBodyArray] = useState<number[]>([0, 1, 2, 3, 4, 5, 6]);
 	const [boolArray, setBoolArray] = useState<tdType>({});
-
 	const [subscribers, setScriber] = useState<Subscribe | undefined>(undefined);
 	const [position, setPosition] = useState<Position | undefined>(undefined);
 	const [isClicked, setIsClicked] = useState<IsClicked | undefined>(undefined);
@@ -30,7 +29,9 @@ const Provider = () => {
 	}, [position]);
 
 	useEffect(() => {
-		setScriber(new Subscribe(boolArray, setBoolArray));
+		if(!subscribers)
+			return;
+		subscribers.boolArray = boolArray;
 	}, [boolArray]);
 
 	useEffect(()=> {
@@ -42,6 +43,7 @@ const Provider = () => {
 			}
 		}
 		setBoolArray(bodies);
+		setScriber(new Subscribe(boolArray, setBoolArray));
 	}, [bodyArray]);
 
 	return (

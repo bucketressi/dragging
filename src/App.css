@@ -45,3 +45,8 @@ td, th{
   border: 1px solid;
   text-align: center;
 }
+
+td.clicked{
+  font-weight: 600;
+  background-color: pink;
+}

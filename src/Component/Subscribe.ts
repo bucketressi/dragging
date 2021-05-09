@@ -11,6 +11,7 @@ export default class Subscribe{
 		this.boolArray = boolArray;
 		this.setBoolArray = setBoolArray;
 	}
+	
 	subscribe(event : string, callback : Function){
 		// event의 handler로 callback 등록
 		if(!this.subscribers[event]){
@@ -34,6 +35,8 @@ export default class Subscribe{
 		if(!this.subscribers[event])
 			return;
 		// 핸들러 순차적 실행
-		this.subscribers[event].forEach(async (handler : Function) => await handler(data));
+		this.subscribers[event].forEach(async (handler : Function, index: number) => {
+			await handler(data);
+		});
 	}
 }
